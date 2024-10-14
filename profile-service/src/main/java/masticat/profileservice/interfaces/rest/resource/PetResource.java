@@ -1,6 +1,10 @@
 package masticat.profileservice.interfaces.rest.resource;
 
-import java.util.Date;
+import masticat.profileservice.domain.model.entities.User;
+import masticat.profileservice.domain.model.valueobjects.Species;
 
-public record PetResource(String uuid, String name, String species, String breed, Date birthDate, Float weight) {
+import java.util.Date;
+import java.util.List;
+
+public record PetResource(String uuid, String name, Species species, String breed, Date birthDate, Float weight, List<User> owners) {
 }

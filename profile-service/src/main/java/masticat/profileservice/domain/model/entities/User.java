@@ -1,9 +1,11 @@
 package masticat.profileservice.domain.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,5 +29,8 @@ public class User {
     private Date birthDate;
 
     @ManyToMany
-    private List<Pet> pets;
+    @JsonBackReference
+    private List<Pet> pets = new ArrayList<>();
+
+    public User(){}
 }

@@ -1,5 +1,8 @@
 package masticat.profileservice.domain.model.commands;
-import java.util.Date;
+import masticat.profileservice.domain.model.valueobjects.Species;
 
-public record CreatePetCommand(String name, String species, String breed, Date birthDate, Float weight) {
+import java.util.Date;
+import java.util.List;
+
+public record CreatePetCommand(String name, Species species, String breed, Date birthDate, Float weight, List<String> ownersUuids) {
 }
