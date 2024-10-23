@@ -1,9 +1,13 @@
 package masticat.profileservice.domain.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import masticat.profileservice.domain.model.valueobjects.Species;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +22,8 @@ public class Pet {
 
     private String name;
 
-    private String species;
+    @Enumerated(EnumType.STRING)
+    private Species species;
 
     private String breed;
 
@@ -26,16 +31,18 @@ public class Pet {
 
     private Float weight;
 
-    @ManyToMany
-    private List<User> owners;
+    @ManyToMany(mappedBy = "pets")
+    @JsonBackReference
+    private List<User> users = new ArrayList<>();
 
     public Pet(){}
 
-    public Pet(String name, String species, String breed, Date birthDate, Float weight) {
+    public Pet(String name, Species species, String breed, Date birthDate, Float weight, List<User> users) {
         this.name = name;
         this.species = species;
         this.breed = breed;
         this.birthDate = birthDate;
         this.weight = weight;
+        this.users = users;
     }
 }

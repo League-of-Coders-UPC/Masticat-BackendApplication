@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import masticat.profileservice.domain.model.commands.CreatePetCommand;
 import masticat.profileservice.domain.model.commands.UpdatePetCommand;
 import masticat.profileservice.domain.model.entities.Pet;
+import masticat.profileservice.domain.model.entities.User;
 import masticat.profileservice.domain.model.queries.GetAllPetsQuery;
 import masticat.profileservice.domain.model.queries.GetPetByUuidQuery;
 import masticat.profileservice.domain.services.PetCommandService;
@@ -34,7 +35,7 @@ public class PetController {
     @Autowired
     PetQueryService petQueryService;
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<PetResource> createPet(@RequestBody CreatePetResource resource) {
         CreatePetCommand createPetCommand = CreatePetCommandFromResourceAssembler.toCommandFromResource(resource);
         String petUuId = petCommandService.handle(createPetCommand);
