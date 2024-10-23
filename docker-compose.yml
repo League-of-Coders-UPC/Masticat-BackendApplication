@@ -1,0 +1,68 @@
+services:
+  profile-db:
+    image: mysql:9.0.1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: profile
+    volumes:
+      - profile-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  iam-db:
+    image: mysql:9.0.1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: service-execution
+    volumes:
+      - iam-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+  pets-db:
+    image: mysql:9.0.1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pets
+    volumes:
+      - pets-data:/var/lib/mysql
+    ports:
+      - "3308:3306"
+
+  communications-db:
+    image: mysql:9.0.1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: communications
+    volumes:
+      - communications-data:/var/lib/mysql
+    ports:
+      - "3309:3306"
+
+  subscriptions-billing-db:
+    image: mysql:9.0.1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: subscriptions-billing
+    volumes:
+      - subscriptions-billing-data:/var/lib/mysql
+    ports:
+      - "3310:3306"
+
+  tracking-db:
+    image: mysql:9.0.1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tracking
+    volumes:
+      - tracking-data:/var/lib/mysql
+    ports:
+      - "3311:3306"
+
+volumes:
+  profile-data:
+  iam-data:
+  pets-data:
+  communications-data:
+  subscriptions-billing-data:
+  tracking-data:
