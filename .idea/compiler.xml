@@ -8,31 +8,39 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="iam-service" />
-        <module name="subscriptions-payments-service" />
-        <module name="service-execution-service" />
-        <module name="configuration-planning-service" />
-        <module name="operation-service" />
-        <module name="monitoring-service" />
+        <module name="subscription-billing-service" />
+        <module name="pet-service" />
+        <module name="communication-service" />
         <module name="profile-service" />
+        <module name="tracking-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="configuration-planning-service" target="23" />
       <module name="iam" target="23" />
       <module name="monitoring" target="23" />
+      <module name="monitoring-service" target="23" />
+      <module name="operation-service" target="23" />
+      <module name="service-execution-service" target="23" />
+      <module name="subscriptions-payments-service" target="23" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="backend" options="" />
+      <module name="communication-service" options="-parameters" />
       <module name="configuration-planning-service" options="-parameters" />
       <module name="iam" options="-parameters" />
       <module name="iam-service" options="-parameters" />
       <module name="monitoring" options="-parameters" />
       <module name="monitoring-service" options="-parameters" />
       <module name="operation-service" options="-parameters" />
+      <module name="pet-service" options="-parameters" />
       <module name="profile-service" options="-parameters" />
       <module name="service-execution-service" options="-parameters" />
+      <module name="subscription-billing-service" options="-parameters" />
       <module name="subscriptions-payments-service" options="-parameters" />
+      <module name="tracking-service" options="-parameters" />
     </option>
   </component>
 </project>
