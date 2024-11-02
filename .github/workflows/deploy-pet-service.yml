@@ -1,14 +1,16 @@
 name: Deploy Pet Service to AWS
-
 on:
   push:
     branches:
       - main
+    paths:
+      - 'pet-service'
   pull_request:
     branches:
       - main
-  workflow_dispatch: # Allows manual trigger
-
+    paths:
+      - 'pet-service'
+  workflow_dispatch:
 jobs:
   deploy-pet-service:
     runs-on: ubuntu-latest
@@ -19,48 +21,33 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Set up JDK 23
         uses: actions/setup-java@v4
         with:
           java-version: '23'
           distribution: 'zulu'
           cache: maven
-
       - name: Build Pet Service jar
         working-directory: ./pet-service
         run: mvn clean package -DskipTests
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-
       - name: Log in to Amazon ECR
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
         run: |
           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
-
-      - name: Check if pet-service was modified
-        id: changes
-        run: |
-          if git diff --name-only HEAD^ HEAD | grep -q '^pet-service/'; then
-            echo "pet-service was modified"
-            echo "changed=true" >> $GITHUB_ENV
-          else
-            echo "changed=false" >> $GITHUB_ENV
-          fi
-
       - name: Build and push Docker image for Pet Service
-        if: env.changed == 'true'
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+          ECR_REPOSITORY: masticat/pet-service
         run: |
-          docker build -t pet-service ./pet-service
-          docker tag pet-service:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/pet-service:latest
-          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/pet-service:latest
+          docker build -t $ECR_REPOSITORY ./pet-service
+          docker tag $ECR_REPOSITORY:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest
+          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest
