@@ -3,9 +3,13 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'pet-service'
   pull_request:
     branches:
       - main
+    paths:
+      - 'pet-service'
   workflow_dispatch:
 jobs:
   deploy-pet-service:
@@ -38,17 +42,7 @@ jobs:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
         run: |
           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
-      - name: Check if pet-service was modified
-        id: changes
-        run: |
-          if git diff --name-only HEAD^ HEAD | grep -q '^pet-service/'; then
-            echo "pet-service was modified"
-            echo "changed=true" >> $GITHUB_ENV
-          else
-            echo "changed=false" >> $GITHUB_ENV
-          fi
       - name: Build and push Docker image for Pet Service
-        if: env.changed == 'true'
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
