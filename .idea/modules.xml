@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/configuration-planning-service/configuration-planning-service.iml" filepath="$PROJECT_DIR$/configuration-planning-service/configuration-planning-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/monitoring-service/monitoring-service.iml" filepath="$PROJECT_DIR$/monitoring-service/monitoring-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/operation-service/operation-service.iml" filepath="$PROJECT_DIR$/operation-service/operation-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-execution-service/service-execution-service.iml" filepath="$PROJECT_DIR$/service-execution-service/service-execution-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/subscriptions-payments-service/subscriptions-payments-service.iml" filepath="$PROJECT_DIR$/subscriptions-payments-service/subscriptions-payments-service.iml" />
+    </modules>
+  </component>
+</project>
