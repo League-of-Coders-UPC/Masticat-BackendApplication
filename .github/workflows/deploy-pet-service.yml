@@ -52,4 +52,4 @@ jobs:
         run: |
           docker build -t pet-service ./pet-service
           docker tag pet-service:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/pet-service:latest
-          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/pet-service:latest
+          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/masticat/pet-service:latest
