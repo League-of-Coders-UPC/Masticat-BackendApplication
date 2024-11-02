@@ -16,7 +16,7 @@ public class PetCommandServiceImpl implements PetCommandService {
     @Autowired
     private PetRepository petRepository;
 
-    //TODO: add user validation
+    //TODO: add user validation with jwt
     @Override
     public String handle(CreatePetCommand command) {
         Pet pet = new Pet(command.name(),command.userUuid(), command.species(), command.breed(), command.birthDate(), command.age(),command.weight(), command.imageUrl());
