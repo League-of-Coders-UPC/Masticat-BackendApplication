@@ -1,26 +1,24 @@
 package masticat.profileservice.domain.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import masticat.profileservice.domain.model.valueobjects.Species;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
-public class Pet {
+public class UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String uuid;
 
     private String name;
+
+    private String userUuid;
 
     @Enumerated(EnumType.STRING)
     private Species species;
@@ -29,20 +27,22 @@ public class Pet {
 
     private Date birthDate;
 
+    private Long age;
+
     private Float weight;
 
-    @ManyToMany(mappedBy = "pets")
-    @JsonBackReference
-    private List<User> users = new ArrayList<>();
+    private String imageUrl;
 
-    public Pet(){}
+    public UserDetails(){}
 
-    public Pet(String name, Species species, String breed, Date birthDate, Float weight, List<User> users) {
+    public UserDetails(String name, String userUuid, Species species, String breed, Date birthDate, Long age, Float weight, String imageUrl) {
         this.name = name;
+        this.userUuid = userUuid;
         this.species = species;
         this.breed = breed;
         this.birthDate = birthDate;
+        this.age = age;
         this.weight = weight;
-        this.users = users;
+        this.imageUrl = imageUrl;
     }
 }

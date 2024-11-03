@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfiguration {
     @Bean
-    public OpenAPI profileServicePlatformOpenApi(){
+    public OpenAPI userDetailsServicePlatformOpenApi(){
         return new OpenAPI()
-                .info(new Info().title("Profile Service API")
+                .info(new Info().title("UserDetails Service API")
                         .description(
-                                "Profile Service REST API Documentation")
+                                "UserDetails Service REST API Documentation")
                         .version("v1.0.0"));
     }
 }
