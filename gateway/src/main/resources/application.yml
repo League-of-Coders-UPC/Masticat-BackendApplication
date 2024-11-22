@@ -1,0 +1,46 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: pet_ms
+          uri: ${PET_SERVICE_URI}
+          predicates:
+            - Path=/pet/api/v1/**
+          filters:
+            - StripPrefix=1
+        - id: profile_ms
+          uri: ${PROFILE_SERVICE_URI}
+          predicates:
+            - Path=/profile/**
+          filters:
+            - StripPrefix=1
+        - id: iam_ms
+          uri: ${IAM_SERVICE_URI}
+          predicates:
+            - Path=/iam/**
+          filters:
+            - StripPrefix=1
+        - id: communication_ms
+          uri: ${COMMUNICATION_SERVICE_URI}
+          predicates:
+            - Path=/communication/**
+          filters:
+            - StripPrefix=1
+        - id: subscription_billing_ms
+          uri: ${SUBSCRIPTION_BILLING_SERVICE_URI}
+          predicates:
+            - Path=/subscription-billing/**
+          filters:
+            - StripPrefix=1
+        - id: tracking_ms
+          uri: ${TRACKING_SERVICE_URI}
+          predicates:
+            - Path=/tracking/**
+          filters:
+            - StripPrefix=1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

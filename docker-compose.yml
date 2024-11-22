@@ -1,4 +1,28 @@
+version: '3.8'
+
 services:
+  # API Gateway
+  gateway:
+    build:
+      context: ./gateway
+    environment:
+      PET_SERVICE_URI: http://pet-service:8083
+      PROFILE_SERVICE_URI: http://profile-service:8081
+      IAM_SERVICE_URI: http://iam-service:8082
+      COMMUNICATION_SERVICE_URI: http://communication-service:8084
+      SUBSCRIPTION_BILLING_SERVICE_URI: http://subscription-billing-service:8085
+      TRACKING_SERVICE_URI: http://tracking-service:8086
+    ports:
+      - "8080:8080"  # Exposing gateway on port 8080 for external access
+    depends_on:
+      - pet-service
+      #- profile-service
+      #- iam-service
+      #- communication-service
+      #- subscription-billing-service
+      #- tracking-service
+
+  # Profile Service
   profile-db:
     image: mysql:9.0.1
     environment:
@@ -6,9 +30,21 @@ services:
       MYSQL_DATABASE: profile
     volumes:
       - profile-data:/var/lib/mysql
+  
+  profile-service:
+    build:
+      context: ./profile-service
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:mysql://profile-db:3306/profile?serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
     ports:
-      - "3306:3306"
+      - "8081:8080"
+    depends_on:
+      - profile-db
 
+  # IAM Service
   iam-db:
     image: mysql:9.0.1
     environment:
@@ -16,9 +52,21 @@ services:
       MYSQL_DATABASE: iam
     volumes:
       - iam-data:/var/lib/mysql
+  
+  iam-service:
+    build:
+      context: ./iam-service
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:mysql://iam-db:3306/iam?serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
     ports:
-      - "3307:3306"
+      - "8082:8080"
+    depends_on:
+      - iam-db
 
+  # Pet Service
   pet-db:
     image: mysql:9.0.1
     environment:
@@ -26,9 +74,21 @@ services:
       MYSQL_DATABASE: pet
     volumes:
       - pet-data:/var/lib/mysql
+  
+  pet-service:
+    build:
+      context: ./pet-service
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:mysql://pet-db:3306/pet?serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
     ports:
-      - "3308:3306"
+      - "8083:8080"
+    depends_on:
+      - pet-db
 
+  # Communication Service
   communication-db:
     image: mysql:9.0.1
     environment:
@@ -36,9 +96,21 @@ services:
       MYSQL_DATABASE: communication
     volumes:
       - communication-data:/var/lib/mysql
+  
+  communication-service:
+    build:
+      context: ./communication-service
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:mysql://communication-db:3306/communication?serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
     ports:
-      - "3309:3306"
+      - "8084:8080"
+    depends_on:
+      - communication-db
 
+  # Subscription Billing Service
   subscription-billing-db:
     image: mysql:9.0.1
     environment:
@@ -46,9 +118,21 @@ services:
       MYSQL_DATABASE: subscription-billing
     volumes:
       - subscription-billing-data:/var/lib/mysql
+  
+  subscription-billing-service:
+    build:
+      context: ./subscription-billing-service
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:mysql://subscription-billing-db:3306/subscription-billing?serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
     ports:
-      - "3310:3306"
+      - "8085:8080"
+    depends_on:
+      - subscription-billing-db
 
+  # Tracking Service
   tracking-db:
     image: mysql:9.0.1
     environment:
@@ -56,8 +140,19 @@ services:
       MYSQL_DATABASE: tracking
     volumes:
       - tracking-data:/var/lib/mysql
+  
+  tracking-service:
+    build:
+      context: ./tracking-service
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:mysql://tracking-db:3306/tracking?serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
     ports:
-      - "3311:3306"
+      - "8086:8080"
+    depends_on:
+      - tracking-db
 
 volumes:
   profile-data:
