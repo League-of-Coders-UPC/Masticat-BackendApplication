@@ -4,12 +4,12 @@ on:
     branches:
       - main
     paths:
-      - 'pet-service'
+      - 'pet-service/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'pet-service'
+      - 'pet-service/**'
   workflow_dispatch:
 jobs:
   deploy-pet-service:
